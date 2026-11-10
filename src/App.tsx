@@ -24,6 +24,22 @@ export default function App() {
     } : room));
   };
 
+  const occupyRoom = (reservation: Reservation) => {
+    setRooms((current) => current.map((room) => room.number === reservation.roomNumber ? {
+      ...room,
+      status: 'occupied-clean',
+      guestName: reservation.guestName,
+      reservationId: reservation.id,
+      checkIn: reservation.checkIn,
+      checkOut: reservation.checkOut,
+    } : room));
+  };
+
+  const createReservation = (reservation: Reservation) => {
+    setReservations((current) => [reservation, ...current]);
+    if (reservation.status === 'checked-in') occupyRoom(reservation);
+  };
+
   const checkIn = (reservationId: string) => {
     const reservation = reservations.find((item) => item.id === reservationId && item.status === 'arriving');
     if (!reservation) return;
@@ -34,14 +50,7 @@ export default function App() {
     setReservations((current) => current.map((item) => item.id === reservation.id ? {
       ...item, status: 'checked-in',
     } : item));
-    setRooms((current) => current.map((item) => item.id === room.id ? {
-      ...item,
-      status: 'occupied-clean',
-      guestName: reservation.guestName,
-      reservationId: reservation.id,
-      checkIn: reservation.checkIn,
-      checkOut: reservation.checkOut,
-    } : item));
+    occupyRoom(reservation);
   };
 
   return (
@@ -61,7 +70,7 @@ export default function App() {
         rooms={rooms}
         reservations={reservations}
         initialRoomId={walkInRoomId}
-        onCreateReservation={(reservation) => setReservations((current) => [reservation, ...current])}
+        onCreateReservation={createReservation}
         onEncodeKeys={(reservationId, keyEncoding) => setReservations((current) => current.map((reservation) =>
           reservation.id === reservationId ? { ...reservation, keyEncoding } : reservation
         ))}

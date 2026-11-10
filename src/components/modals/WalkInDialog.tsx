@@ -258,7 +258,7 @@ function WalkInForm({ onClose, rooms, reservations, initialRoomId, onCreateReser
       checkIn: today, checkOut, nights: dates.length,
       adults: guests.filter((guest) => guest.type === 'adult').length,
       children: guests.filter((guest) => guest.type === 'child').length,
-      status: 'arriving', channel: 'Walk-In', totalAmount: totalCents / 100, balanceDue: totalCents / 100,
+      status: 'checked-in', channel: 'Walk-In', totalAmount: totalCents / 100, balanceDue: totalCents / 100,
     };
     onCreateReservation(reservation);
     setCreatedReservation(reservation);
