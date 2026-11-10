@@ -1,0 +1,374 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  }
+}
+
+/* Hide native browser scrollbars completely so custom interactive scrollbars & rounded corners stay crisp */
+.no-native-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-native-scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Indeterminate rail used while a page or overlay is preparing */
+.badger-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 60;
+  overflow: hidden;
+  pointer-events: none;
+  background: rgba(0, 95, 184, 0.12);
+}
+
+.badger-progress > span {
+  display: block;
+  height: 100%;
+  width: 42%;
+  background: linear-gradient(90deg, transparent, #005fb8 42%, #8ec8ff 72%, transparent);
+  animation: badger-progress 1.05s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.badger-progress--inverse {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.badger-progress--inverse > span {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.95), transparent);
+}
+
+.badger-bone {
+  background-color: #e6edf5;
+  background-image: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0) 32%,
+    rgba(255, 255, 255, 0.9) 50%,
+    rgba(255, 255, 255, 0) 68%
+  );
+  background-size: 220% 100%;
+  background-repeat: no-repeat;
+  animation: badger-shimmer 1.5s ease-in-out infinite;
+}
+
+.badger-content-in {
+  animation: badger-content-in 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes badger-shimmer {
+  0% {
+    background-position: 120% 0;
+  }
+  100% {
+    background-position: -120% 0;
+  }
+}
+
+@keyframes badger-progress {
+  0% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(280%);
+  }
+}
+
+@keyframes badger-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rooms-rise {
+  animation: rooms-rise 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.rooms-inspector {
+  animation: rooms-inspector 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.rooms-pop {
+  animation: rooms-pop 140ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.room-status-menu {
+  position: absolute;
+  inset: auto;
+  top: 0;
+  left: calc(100% + 12px);
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+}
+
+.room-status-menu[data-side='left'] {
+  left: auto;
+  right: calc(100% + 12px);
+}
+
+.room-status-menu[data-align='bottom'] {
+  top: auto;
+  bottom: 0;
+}
+
+.room-status-menu__arrow {
+  position: absolute;
+  left: -8px;
+  top: calc(var(--room-anchor-half) - 7px);
+}
+
+.room-status-menu[data-side='left'] .room-status-menu__arrow {
+  left: auto;
+  right: -8px;
+}
+
+.room-status-menu[data-align='bottom'] .room-status-menu__arrow {
+  top: auto;
+  bottom: calc(var(--room-anchor-half) - 7px);
+}
+
+.rooms-filter-panel {
+  position: absolute;
+  inset: calc(100% + 0.5rem) 0 auto auto;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  width: 48rem;
+  max-width: calc(100vw - 2rem);
+  max-height: min(36rem, 70dvh);
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 1rem;
+  box-shadow: 0 20px 60px -12px rgba(15, 23, 42, 0.3), 0 6px 20px -6px rgba(15, 23, 42, 0.15);
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px) scale(0.98);
+  transform-origin: top right;
+  transition:
+    transform 240ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 180ms ease,
+    visibility 0s 240ms;
+}
+
+.rooms-filter-panel[data-open='true'] {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+  transition-delay: 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rooms-filter-panel { transition: none; }
+}
+
+.rooms-pill {
+  transition:
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    width 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    height 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Shared selection accent. One element glides; it is not remounted per item. */
+.rail-accent {
+  transition:
+    transform 440ms cubic-bezier(0.22, 1, 0.36, 1),
+    height 440ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 160ms ease;
+}
+
+.rooms-flash-ring {
+  animation: rooms-flash-ring 420ms ease-out;
+}
+
+@keyframes rooms-rise {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes rooms-inspector {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes rooms-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes rooms-flash-ring {
+  0% {
+    box-shadow: inset 0 0 0 2px var(--rooms-flash, #005fb8);
+  }
+  100% {
+    box-shadow: inset 0 0 0 2px transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .badger-bone,
+  .badger-progress > span,
+  .badger-content-in,
+  .rooms-rise,
+  .rooms-inspector,
+  .rooms-pop,
+  .rooms-flash-ring {
+    animation: none;
+  }
+
+  .rooms-pill,
+  .rail-accent {
+    transition: none;
+  }
+}
+
+/*
+ * Room door glyph — a door in its jamb, drawn on a 1em grid so one drawing
+ * scales from room cards (default, 1em = 4px) down to legends and menus (--sm).
+ * The jamb is a 2-unit outline open at the floor; a hairline gap separates it from the door panel. Closed: solid panel with a
+ * small round knob. Open: the doorway takes a light tint and the panel swings in on
+ * its left hinge as a narrow, foreshortened leaf.
+ */
+.room-door {
+  --door: #53a97c;
+  --door-shade: #409068;
+  --door-tint: #e9f5ee;
+  --door-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  display: block;
+  flex-shrink: 0;
+  font-size: 4px; /* 1em unit → 28 × 44px glyph */
+  width: 7em;
+  height: 11em;
+}
+.room-door[data-state='occupied'] { --door: #e05e5e; --door-shade: #c84a4a; --door-tint: #fce9e9; }
+.room-door[data-state='dirty'] { --door: #e59a1b; --door-shade: #ca7615; --door-tint: #faf1cb; }
+.room-door[data-state='ooo'] { --door: #779bde; --door-shade: #6286ca; --door-tint: #eef3fc; }
+
+/* Jamb: outline only, no bottom edge — the threshold closes it. */
+.room-door__frame {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  border: 0.5em solid var(--door);
+  border-bottom: 0;
+  border-radius: 1em 1em 0 0;
+  transition: border-color 360ms ease;
+}
+.room-door__opening {
+  position: absolute;
+  inset: 0.5em 0.5em 0 0.5em;
+  overflow: hidden;
+  border-radius: 0.375em 0.375em 0 0;
+  background: transparent;
+  transition: background-color 360ms ease;
+}
+.room-door__leaf {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  background: var(--door);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  transition:
+    width 360ms var(--door-ease),
+    clip-path 360ms var(--door-ease),
+    background-color 360ms ease;
+}
+/* Handle: a small round knob near the latch edge. */
+.room-door__knob {
+  position: absolute;
+  right: 1em;
+  top: 50%;
+  width: 1em;
+  height: 1em;
+  margin-top: -0.5em;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  transition:
+    right 360ms var(--door-ease),
+    width 360ms var(--door-ease),
+    height 360ms var(--door-ease),
+    margin-top 360ms var(--door-ease);
+}
+
+.room-door[data-open='true'] .room-door__opening {
+  background: var(--door-tint);
+}
+.room-door[data-open='true'] .room-door__leaf {
+  width: 1.75em;
+  clip-path: polygon(0 0, 100% 8%, 100% 94%, 0 100%);
+  background: var(--door-shade);
+}
+.room-door[data-open='true'] .room-door__knob {
+  right: 0.5em;
+  width: 0.75em;
+  height: 0.75em;
+  margin-top: -0.375em;
+}
+
+/*
+ * Small variant: legends, menus and the detail bar (10.5 × 16.5px). Strokes are
+ * pinned to whole-ish pixels so the jamb stays crisp at this size.
+ */
+.room-door--sm { font-size: 1.5px; }
+.room-door--sm .room-door__frame { border-width: 1em; border-radius: 1.75em 1.75em 0 0; }
+.room-door--sm .room-door__opening { inset: 0.5em 0.5em 0 0.5em; border-radius: 0.75em 0.75em 0 0; }
+.room-door--sm .room-door__knob { display: none; }
+.room-door--sm[data-open='true'] .room-door__leaf { width: 2em; }
+
+@media (prefers-reduced-motion: reduce) {
+  .room-door__frame,
+  .room-door__opening,
+  .room-door__leaf,
+  .room-door__knob { transition: none; }
+}
+
+/* Movement arrows take the colour of the state the room is heading to. */
+.room-move--in { color: #e05e5e; }
+.room-move--out { color: #e59a1b; }

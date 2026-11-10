@@ -1,0 +1,60 @@
+import { NavigationModule } from '../types/pms';
+
+export const PMS_MODULES: NavigationModule[] = [
+  {
+    id: 'overview',
+    label: 'Live Pulse',
+    shortLabel: 'Pulse',
+    description: 'Real-time property overview, occupancy pace, and shift intelligence',
+    tooltip: 'Live Pulse Dashboard',
+    requiresSecondarySidebar: false,
+  },
+  {
+    id: 'front-desk',
+    label: 'Front Desk',
+    shortLabel: 'Front Desk',
+    description: 'Reception operations, arrivals, departures, and in-house guest management',
+    tooltip: 'Front Desk Operations',
+    requiresSecondarySidebar: true,
+  },
+  {
+    id: 'tape-chart',
+    label: 'Tape Chart',
+    shortLabel: 'Tape Chart',
+    description: 'Full-width interactive timeline rack for room allocation and stay extensions',
+    tooltip: 'Tape Chart Timeline',
+    requiresSecondarySidebar: false,
+  },
+  {
+    id: 'reservations',
+    label: 'Reservations',
+    shortLabel: 'Reservations',
+    description: 'All reservations, arriving, inhouse, leaving, and waitlist management',
+    tooltip: 'Reservations Management',
+    requiresSecondarySidebar: true,
+  },
+  {
+    id: 'rooms',
+    label: 'Rooms',
+    shortLabel: 'Rooms',
+    description: 'Room map, live occupancy, arrivals, and room readiness',
+    tooltip: 'Rooms',
+    requiresSecondarySidebar: false,
+  },
+  {
+    id: 'billing',
+    label: 'Folios & Billing',
+    shortLabel: 'Folios',
+    description: 'Guest folios, split routing, city ledger, and POS outlet charges',
+    tooltip: 'Folios & Billing',
+    requiresSecondarySidebar: true,
+  },
+  {
+    id: 'settings',
+    label: 'Configuration',
+    shortLabel: 'Configuration',
+    description: 'Tenant account, property rules, roles & scopes, and data connectors',
+    tooltip: 'System Settings',
+    requiresSecondarySidebar: true,
+  },
+];
